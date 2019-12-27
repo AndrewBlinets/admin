@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import static org.springframework.http.ResponseEntity.ok;
 
+@CrossOrigin
 @RestController
 public class TestController {
 

@@ -1,4 +1,4 @@
-package by.ipps.admin.controller;//package by.ipps.admin.controller;
+//package by.ipps.admin.controller;//package by.ipps.admin.controller;
 //
 //import by.ipps.admin.controller.base.BaseEntityAbstractController;
 //import by.ipps.admin.controller.base.BaseEntityController;
