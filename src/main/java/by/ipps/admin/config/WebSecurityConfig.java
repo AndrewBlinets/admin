@@ -57,6 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/getInfo").permitAll()
                 .antMatchers("/department/**").hasAuthority("super-admin")
                 .antMatchers("/company/**").hasAuthority("super-admin")
+                .antMatchers("/news/**").hasAuthority("super-admin")
 //                .antMatchers("/department").hasRole("super-admin")
 //                .antMatchers("/hello").hasRole("superAdmin")
                 .and().
