@@ -1,38 +1,24 @@
-//package by.ipps.admin.controller;//package by.ipps.admin.controller;
-//
-//import by.ipps.admin.controller.base.BaseEntityAbstractController;
-//import by.ipps.admin.controller.base.BaseEntityController;
-//import by.ipps.dao.dto.news.NewsDtoFull;
-//import by.ipps.dao.dto.news.PageNewsDto;
-//import by.ipps.dao.entity.News;
-//import by.ipps.dao.service.NewsService;
-//import by.ipps.dao.utils.constant.FilterName;
-//import org.hibernate.Session;
-//import org.modelmapper.ModelMapper;
-//import org.springframework.data.domain.Page;
-//import org.springframework.data.domain.Pageable;
-//import org.springframework.data.web.PageableDefault;
-//import org.springframework.http.HttpStatus;
-//import org.springframework.http.ResponseEntity;
-//import org.springframework.web.bind.annotation.*;
-//
-//import javax.persistence.EntityManager;
-//import javax.persistence.PersistenceContext;
-//import javax.transaction.Transactional;
-//
-//@RestController
-//@RequestMapping("/news")
-//public class NewsController extends BaseEntityAbstractController<News, NewsService>
-//        implements BaseEntityController<News> {
+package by.ipps.admin.controller;
+
+import by.ipps.admin.controller.base.BaseEntityAbstractController;
+import by.ipps.admin.controller.base.BaseEntityController;
+import by.ipps.admin.entity.News;
+import by.ipps.admin.utils.resttemplate.DepartmentRestTemplate;
+import by.ipps.admin.utils.resttemplate.NewsRestTemplate;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/news")
+public class NewsController extends BaseEntityAbstractController<News, NewsRestTemplate>
+        implements BaseEntityController<News> {
 //
 //    private final NewsService service;
 //    private ModelMapper mapper;
 //
-//    protected NewsController(NewsService newsService, ModelMapper mapper) {
-//        super(newsService, url);
-//        this.service = newsService;
-//        this.mapper = mapper;
-//    }
+public NewsController(NewsRestTemplate newsRestTemplate) {
+  super(newsRestTemplate, "news");
+}
 //
 //    @PersistenceContext
 //    private EntityManager entityManager;
@@ -65,4 +51,4 @@
 //        }
 //    }
 //
-//}
+}

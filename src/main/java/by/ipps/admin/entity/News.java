@@ -17,7 +17,7 @@ public class News extends BaseEntity implements Serializable {
 
     private Date datePublic;
     private List<NewsLanguageVersion> languageVersions;
-    private FileManager mainImage;
+    private long mainImage;
     private int countView;
     private String status;
 
