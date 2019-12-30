@@ -32,7 +32,7 @@ public interface BaseEntityController<T extends BaseEntity> {
     @GetMapping
     ResponseEntity<CustomPage<T>> getAll(
             @RequestParam(value = "page", required = false, defaultValue = "0") long page,
-            @RequestParam(value = "size", required = false, defaultValue = "0") int size,
+            @RequestParam(value = "size", required = false, defaultValue = "10") int size,
             @RequestParam(value = "sort", required = false, defaultValue = "") String sort,
             @RequestParam(value = "language", required = false, defaultValue = "ru") String language);
 

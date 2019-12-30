@@ -12,7 +12,8 @@ import java.util.Collections;
 
 public abstract class AbstractBaseEntityRestTemplate<E> implements BaseEntityRestTemplate<E> {
 
-    protected static final String URL_SERVER = "http://localhost:8082/dao/";
+//    protected static final String URL_SERVER = "http://localhost:8082/dao/";
+    protected static final String URL_SERVER = "http://192.168.1.125:8080/dao/";
 
     private Class<E> entityClass;
 

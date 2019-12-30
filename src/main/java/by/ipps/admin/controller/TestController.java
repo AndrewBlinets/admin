@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import static org.springframework.http.ResponseEntity.ok;
 
-@CrossOrigin
+
 @RestController
 public class TestController {
 
@@ -25,20 +25,7 @@ public class TestController {
         this.jwtTokenUtil = jwtTokenUtil;
     }
 
-    @GetMapping(value = "/hello")
-    @ResponseBody
-    @PreAuthorize("hasAuthority('SuperEditor')")
-    public String hello(){
-        return "Hello World!";
-    }
-
-
-    @GetMapping(value = "/authenticate")
-    @ResponseBody
-    public String hello1(){
-        return "Hello World!";
-    }
-
+    @CrossOrigin
     @GetMapping(value = "/getInfo")
     @ResponseBody
     public User getBaseInfo(){
