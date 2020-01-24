@@ -38,7 +38,7 @@ public class TestController {
         }
         if (!username.equals("anonymousUser")){
             User user = rest.getUserByLogin(username);
-            return new User(null, null, user.getName(), username, "patronic", user.getRoles());
+            return new User(user.getName(), username, "patronic", user.getRoles());
         } else
             return null;
     }

@@ -19,4 +19,16 @@ public class User extends BaseEntity implements Serializable {
     private String surName;
     private String patronicName;
     private List<String> roles;
+    private String position;
+    private String email;
+    private long department;
+    private boolean enabled;
+    private boolean block;
+
+    public User(String name, String username, String patronic, List<String> roles) {
+        this.name = name;
+        this.surName = username;
+        this.patronicName = patronic;
+        this.roles = roles;
+    }
 }

@@ -13,6 +13,6 @@ public class DepartmentController extends BaseEntityAbstractController<Departmen
         implements BaseEntityController<Department> {
 
     public DepartmentController(DepartmentRestTemplate departmentTemplate) {
-        super(departmentTemplate, "department/admin");
+        super(departmentTemplate, "department");
     }
 }

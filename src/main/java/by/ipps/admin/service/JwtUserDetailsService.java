@@ -24,12 +24,14 @@ public class JwtUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) {
         by.ipps.admin.entity.User user = restRequestToDao.getUserByLogin(username);
-            return new User(user.getLogin(), user.getHashPassword(),
-//                    "$2a$10$slYQmyNdGzTn7ZLBXBChFOC9f6kFjAqPhccnP6DxlWXx2lPk1C3G6",
-                    getAuthorities(user.getRoles()));
-//        } else {
-//            throw new UsernameNotFoundException("User not found with username: " + username);
-//        }
+        return new User(
+                user.getLogin(),
+                user.getHashPassword(),
+                user.isEnabled(),
+                true,
+                true,
+                !user.isBlock(),
+                getAuthorities(user.getRoles()));
     }
 
     private Collection<? extends GrantedAuthority> getAuthorities(
