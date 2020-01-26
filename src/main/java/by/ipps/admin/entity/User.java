@@ -1,5 +1,6 @@
 package by.ipps.admin.entity;
 
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,7 @@ public class User extends BaseEntity implements Serializable {
     private long department;
     private boolean enabled;
     private boolean block;
+    private Date dateLastChangePassword;
 
     public User(String name, String username, String patronic, List<String> roles) {
         this.name = name;

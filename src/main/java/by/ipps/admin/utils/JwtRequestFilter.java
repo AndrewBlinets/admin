@@ -1,10 +1,17 @@
 package by.ipps.admin.utils;
 
+import by.ipps.admin.entity.User;
 import by.ipps.admin.service.JwtUserDetailsService;
+import by.ipps.admin.utils.resttemplate.UserRestTemplate;
 import io.jsonwebtoken.ExpiredJwtException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -22,14 +29,16 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
   private final JwtUserDetailsService jwtUserDetailsService;
   private final JwtTokenUtil jwtTokenUtil;
+  private final UserRestTemplate restRequestToDao;
   @Autowired
   private AuthenticationManager authenticationManager;
 
   public JwtRequestFilter(
       JwtUserDetailsService jwtUserDetailsService,
-      JwtTokenUtil jwtTokenUtil) {
+      JwtTokenUtil jwtTokenUtil, UserRestTemplate restRequestToDao) {
     this.jwtUserDetailsService = jwtUserDetailsService;
     this.jwtTokenUtil = jwtTokenUtil;
+    this.restRequestToDao = restRequestToDao;
   }
 
   @Override
@@ -54,12 +63,24 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     } else {
       logger.warn("JWT Token does not begin with Bearer String");
     }
+    User user = restRequestToDao.getUserByLogin(username);
+//    user.isBlock()
+
     // Once we get the token validate it.
-    if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-      UserDetails userDetails = this.jwtUserDetailsService.loadUserByUsername(username);
+    if (username != null && jwtTokenUtil.validateToken(jwtToken, user)) {
+      UserDetails userDetails = new org.springframework.security.core.userdetails.User(
+          user.getLogin(),
+          user.getHashPassword(),
+          user.isEnabled(),
+          true,
+          true,
+          !user.isBlock(),
+          getAuthorities(user.getRoles()));
+    if ( SecurityContextHolder.getContext().getAuthentication() == null) {
+
       // if token is valid configure Spring Security to manually set
       // authentication
-      if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
+
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = null;
           usernamePasswordAuthenticationToken =
               new UsernamePasswordAuthenticationToken(
@@ -78,5 +99,27 @@ public class JwtRequestFilter extends OncePerRequestFilter {
       }
     }
     chain.doFilter(request, response);
+  }
+
+  private Collection<? extends GrantedAuthority> getAuthorities(
+      List<String> roles) {
+
+    return getGrantedAuthorities(getPrivileges(roles));
+  }
+
+  private List<String> getPrivileges(List<String> roles) {
+    List<String> privileges = new ArrayList<>();
+    for (String role : roles) {
+      privileges.add(role);
+    }
+    return privileges;
+  }
+
+  private List<GrantedAuthority> getGrantedAuthorities(List<String> privileges) {
+    List<GrantedAuthority> authorities = new ArrayList<>();
+    for (String privilege : privileges) {
+      authorities.add(new SimpleGrantedAuthority(privilege));
+    }
+    return authorities;
   }
 }
