@@ -48,8 +48,8 @@ public abstract class AbstractBaseEntityRestTemplate<E> implements BaseEntityRes
   }
 
   @Override
-  public ResponseEntity<E> create(E entity, String url) {
-    UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_SERVER + url);
+  public ResponseEntity<E> create(E entity, String url, long idUser) {
+    UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_SERVER + url + "?user=" + idUser);
     HttpHeaders requestHeaders = new HttpHeaders();
     requestHeaders.setContentType(MediaType.APPLICATION_JSON);
     requestHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
@@ -59,8 +59,8 @@ public abstract class AbstractBaseEntityRestTemplate<E> implements BaseEntityRes
   }
 
   @Override
-  public ResponseEntity<E> update(E entity, String url) {
-    UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_SERVER + url);
+  public ResponseEntity<E> update(E entity, String url, long idUser) {
+    UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_SERVER + url + "?user=" + idUser);
     HttpHeaders requestHeaders = new HttpHeaders();
     requestHeaders.setContentType(MediaType.APPLICATION_JSON);
     requestHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
@@ -69,8 +69,8 @@ public abstract class AbstractBaseEntityRestTemplate<E> implements BaseEntityRes
   }
 
   @Override
-  public ResponseEntity<Boolean> delete(long byId, String url) {
-    UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_SERVER + url + "/" + byId);
+  public ResponseEntity<Boolean> delete(long byId, String url, long idUser) {
+    UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_SERVER + url + "/" + byId + "?user=" + idUser);
     return restTemplate.exchange(builder.toUriString(), HttpMethod.DELETE, null, Boolean.TYPE);
   }
 }

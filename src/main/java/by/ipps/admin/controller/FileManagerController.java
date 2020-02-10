@@ -1,10 +1,13 @@
 package by.ipps.admin.controller;
 
 import by.ipps.admin.entity.FileManager;
+import by.ipps.admin.entity.UserAuth;
+import by.ipps.admin.utils.RestRequestToDao;
 import by.ipps.admin.utils.resttemplate.FileManagerRestTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,9 +26,12 @@ public class FileManagerController {
     private static final String ROOT_PATH = "C:\\path\\";
 
     private final FileManagerRestTemplate fileManagerRestTemplate;
+    private RestRequestToDao restRequestToDao;
 
-    public FileManagerController(FileManagerRestTemplate fileManagerRestTemplate) {
+    public FileManagerController(FileManagerRestTemplate fileManagerRestTemplate,
+        RestRequestToDao restRequestToDao) {
         this.fileManagerRestTemplate = fileManagerRestTemplate;
+        this.restRequestToDao = restRequestToDao;
     }
 
     @PostMapping(value = "/{type}")
@@ -50,7 +56,7 @@ public class FileManagerController {
                 try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile))) {
                     stream.write(bytes);
                 }
-                fileManager = fileManagerRestTemplate.create(fileManager, "/file").getBody();
+                fileManager = fileManagerRestTemplate.create(fileManager, "/file", getUserID()).getBody();
                 BufferedImage originalImage = null;
                 try (InputStream in = new ByteArrayInputStream(bytes)) {
                     originalImage = ImageIO.read(in);
@@ -100,5 +106,17 @@ public class FileManagerController {
     @ResponseBody
     public ResponseEntity<HttpStatus> getByIdRelize(@PathVariable long id, HttpServletResponse response) {
         return fileManagerRestTemplate.getByIdRelize(id, response);
+    }
+
+    private Long getUserID() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = "";
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+        UserAuth user = restRequestToDao.getUserByLogin(username);
+        return user.getId();
     }
 }

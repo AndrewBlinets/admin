@@ -2,8 +2,14 @@ package by.ipps.admin.controller.base;
 
 import by.ipps.admin.custom.CustomPage;
 import by.ipps.admin.entity.BaseEntity;
+import by.ipps.admin.entity.User;
+import by.ipps.admin.entity.UserAuth;
+import by.ipps.admin.utils.RestRequestToDao;
 import by.ipps.admin.utils.resttemplate.base.BaseEntityRestTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 public abstract class BaseEntityAbstractController<T extends BaseEntity, S extends BaseEntityRestTemplate<T>>
@@ -11,6 +17,9 @@ public abstract class BaseEntityAbstractController<T extends BaseEntity, S exten
 
   protected final S baseEntityTemplate;
   protected final String url;
+
+  @Autowired
+  private RestRequestToDao restRequestToDao;
 
   protected BaseEntityAbstractController(S s, String url) {
     this.baseEntityTemplate = s;
@@ -26,19 +35,34 @@ public abstract class BaseEntityAbstractController<T extends BaseEntity, S exten
   @CrossOrigin
   @Override
   public ResponseEntity<T> create(T entity) {
-    return baseEntityTemplate.create(entity, url);
+    long idUser = getUserID();
+    return baseEntityTemplate.create(entity, url, idUser);
+  }
+
+  private Long getUserID() {
+    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    String username = "";
+    if (principal instanceof UserDetails) {
+      username = ((UserDetails)principal).getUsername();
+    } else {
+      username = principal.toString();
+    }
+      UserAuth user = restRequestToDao.getUserByLogin(username);
+      return user.getId();
   }
 
   @CrossOrigin
   @Override
   public ResponseEntity<T> update(T entity) {
-    return baseEntityTemplate.update(entity, url);
+    long idUser = getUserID();
+    return baseEntityTemplate.update(entity, url, idUser);
   }
 
   @CrossOrigin
   @Override
   public ResponseEntity<Boolean> remove(Long id) {
-    return baseEntityTemplate.delete(id, url);
+    long idUser = getUserID();
+    return baseEntityTemplate.delete(id, url, idUser);
   }
 
   @CrossOrigin

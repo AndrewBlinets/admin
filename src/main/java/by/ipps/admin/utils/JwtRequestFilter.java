@@ -60,43 +60,43 @@ public class JwtRequestFilter extends OncePerRequestFilter {
       } catch (ExpiredJwtException e) {
         System.out.println("JWT Token has expired");
       }
-    } else {
-      logger.warn("JWT Token does not begin with Bearer String");
-    }
-    User user = restRequestToDao.getUserByLogin(username);
+      User user = restRequestToDao.getUserByLogin(username);
 //    user.isBlock()
 
-    // Once we get the token validate it.
-    if (username != null && jwtTokenUtil.validateToken(jwtToken, user)) {
-      UserDetails userDetails = new org.springframework.security.core.userdetails.User(
-          user.getLogin(),
-          user.getHashPassword(),
-          user.isEnabled(),
-          true,
-          true,
-          !user.isBlock(),
-          getAuthorities(user.getRoles()));
-    if ( SecurityContextHolder.getContext().getAuthentication() == null) {
+      // Once we get the token validate it.
+      if (username != null && jwtTokenUtil.validateToken(jwtToken, user)) {
+        UserDetails userDetails = new org.springframework.security.core.userdetails.User(
+            user.getLogin(),
+            user.getHashPassword(),
+            user.isEnabled(),
+            true,
+            true,
+            !user.isBlock(),
+            getAuthorities(user.getRoles()));
+        if ( SecurityContextHolder.getContext().getAuthentication() == null) {
 
-      // if token is valid configure Spring Security to manually set
-      // authentication
+          // if token is valid configure Spring Security to manually set
+          // authentication
 
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = null;
+          UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = null;
           usernamePasswordAuthenticationToken =
               new UsernamePasswordAuthenticationToken(
                   userDetails, null, userDetails.getAuthorities());
           usernamePasswordAuthenticationToken.setDetails(
               new WebAuthenticationDetailsSource().buildDetails(request));
 
-        // After setting the Authentication in the context, we specify
-        // that the current user is authenticated. So it passes the
-        // Spring Security Configurations successfully.
-        try{SecurityContextHolder.getContext()
-            .setAuthentication(usernamePasswordAuthenticationToken);
-            } catch (Exception e) {
+          // After setting the Authentication in the context, we specify
+          // that the current user is authenticated. So it passes the
+          // Spring Security Configurations successfully.
+          try{SecurityContextHolder.getContext()
+              .setAuthentication(usernamePasswordAuthenticationToken);
+          } catch (Exception e) {
             System.out.println("asdasdadxzczczczxczxczxc");
+          }
         }
       }
+    } else {
+      logger.warn("JWT Token does not begin with Bearer String");
     }
     chain.doFilter(request, response);
   }
