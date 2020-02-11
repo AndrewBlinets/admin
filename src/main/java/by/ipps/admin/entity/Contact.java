@@ -11,11 +11,10 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Contact extends BaseEntity {
 
-    private String nameControl;
-    private String positionName;
-    private String room;
-    private String phone;
-    private String email;
-    private String note;
-
+  private String nameControl;
+  private String positionName;
+  private String room;
+  private String phone;
+  private String email;
+  private String note;
 }

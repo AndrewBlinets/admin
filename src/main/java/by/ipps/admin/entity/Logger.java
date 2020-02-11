@@ -13,10 +13,9 @@ import java.io.Serializable;
 @Setter
 public class Logger extends BaseEntity implements Serializable {
 
-    private User user;
-    private String tableName;
-    private long rowId;
-    private String event;
-    private String oldValue;
-
+  private User user;
+  private String tableName;
+  private long rowId;
+  private String event;
+  private String oldValue;
 }

@@ -13,6 +13,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class Language extends BaseEntity implements Serializable {
 
-    private String nameLanguage;
-    private String codeLanguage;
+  private String nameLanguage;
+  private String codeLanguage;
 }

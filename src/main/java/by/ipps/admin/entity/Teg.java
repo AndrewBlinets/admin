@@ -13,6 +13,5 @@ import java.io.Serializable;
 @Setter
 public class Teg extends BaseEntity implements Serializable {
 
-    private String name;
-
+  private String name;
 }

@@ -4,9 +4,6 @@ import by.ipps.admin.entity.User;
 import by.ipps.admin.service.JwtUserDetailsService;
 import by.ipps.admin.utils.resttemplate.UserRestTemplate;
 import io.jsonwebtoken.ExpiredJwtException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,6 +20,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
@@ -30,12 +30,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
   private final JwtUserDetailsService jwtUserDetailsService;
   private final JwtTokenUtil jwtTokenUtil;
   private final UserRestTemplate restRequestToDao;
-  @Autowired
-  private AuthenticationManager authenticationManager;
+  @Autowired private AuthenticationManager authenticationManager;
 
   public JwtRequestFilter(
       JwtUserDetailsService jwtUserDetailsService,
-      JwtTokenUtil jwtTokenUtil, UserRestTemplate restRequestToDao) {
+      JwtTokenUtil jwtTokenUtil,
+      UserRestTemplate restRequestToDao) {
     this.jwtUserDetailsService = jwtUserDetailsService;
     this.jwtTokenUtil = jwtTokenUtil;
     this.restRequestToDao = restRequestToDao;
@@ -61,19 +61,20 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         System.out.println("JWT Token has expired");
       }
       User user = restRequestToDao.getUserByLogin(username);
-//    user.isBlock()
+      //    user.isBlock()
 
       // Once we get the token validate it.
       if (username != null && jwtTokenUtil.validateToken(jwtToken, user)) {
-        UserDetails userDetails = new org.springframework.security.core.userdetails.User(
-            user.getLogin(),
-            user.getHashPassword(),
-            user.isEnabled(),
-            true,
-            true,
-            !user.isBlock(),
-            getAuthorities(user.getRoles()));
-        if ( SecurityContextHolder.getContext().getAuthentication() == null) {
+        UserDetails userDetails =
+            new org.springframework.security.core.userdetails.User(
+                user.getLogin(),
+                user.getHashPassword(),
+                user.isEnabled(),
+                true,
+                true,
+                !user.isBlock(),
+                getAuthorities(user.getRoles()));
+        if (SecurityContextHolder.getContext().getAuthentication() == null) {
 
           // if token is valid configure Spring Security to manually set
           // authentication
@@ -88,8 +89,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
           // After setting the Authentication in the context, we specify
           // that the current user is authenticated. So it passes the
           // Spring Security Configurations successfully.
-          try{SecurityContextHolder.getContext()
-              .setAuthentication(usernamePasswordAuthenticationToken);
+          try {
+            SecurityContextHolder.getContext()
+                .setAuthentication(usernamePasswordAuthenticationToken);
           } catch (Exception e) {
             System.out.println("asdasdadxzczczczxczxczxc");
           }
@@ -101,8 +103,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     chain.doFilter(request, response);
   }
 
-  private Collection<? extends GrantedAuthority> getAuthorities(
-      List<String> roles) {
+  private Collection<? extends GrantedAuthority> getAuthorities(List<String> roles) {
 
     return getGrantedAuthorities(getPrivileges(roles));
   }

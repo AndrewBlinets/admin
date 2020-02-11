@@ -5,5 +5,4 @@ import by.ipps.admin.utils.resttemplate.base.BaseEntityRestTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-public interface NewsRestTemplate extends BaseEntityRestTemplate<News> {
-}
+public interface NewsRestTemplate extends BaseEntityRestTemplate<News> {}

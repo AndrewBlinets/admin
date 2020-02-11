@@ -6,5 +6,5 @@ import by.ipps.admin.utils.resttemplate.base.AbstractBaseEntityRestTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ContactTemplate extends AbstractBaseEntityRestTemplate<Contact> implements ContactRestTemplate {
-}
+public class ContactTemplate extends AbstractBaseEntityRestTemplate<Contact>
+    implements ContactRestTemplate {}

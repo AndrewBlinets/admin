@@ -13,9 +13,9 @@ import java.io.Serializable;
 @Setter
 public class NewsLanguageVersion extends BaseEntity implements Serializable {
 
-    private String title;
-    private String content;
-    private String shortTitle;
-    private String entrySpeech;
-    private String codeLanguage;
+  private String title;
+  private String content;
+  private String shortTitle;
+  private String entrySpeech;
+  private String codeLanguage;
 }

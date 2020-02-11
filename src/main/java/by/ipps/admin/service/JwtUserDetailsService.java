@@ -15,44 +15,43 @@ import java.util.List;
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
 
-    private final UserRestTemplate restRequestToDao;
+  private final UserRestTemplate restRequestToDao;
 
-    public JwtUserDetailsService(UserRestTemplate userRestTemplate) {
-        this.restRequestToDao = userRestTemplate;
+  public JwtUserDetailsService(UserRestTemplate userRestTemplate) {
+    this.restRequestToDao = userRestTemplate;
+  }
+
+  @Override
+  public UserDetails loadUserByUsername(String username) {
+    by.ipps.admin.entity.User user = restRequestToDao.getUserByLogin(username);
+    return new User(
+        user.getLogin(),
+        user.getHashPassword(),
+        user.isEnabled(),
+        true,
+        true,
+        !user.isBlock(),
+        getAuthorities(user.getRoles()));
+  }
+
+  private Collection<? extends GrantedAuthority> getAuthorities(List<String> roles) {
+
+    return getGrantedAuthorities(getPrivileges(roles));
+  }
+
+  private List<String> getPrivileges(List<String> roles) {
+    List<String> privileges = new ArrayList<>();
+    for (String role : roles) {
+      privileges.add(role);
     }
+    return privileges;
+  }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) {
-        by.ipps.admin.entity.User user = restRequestToDao.getUserByLogin(username);
-        return new User(
-                user.getLogin(),
-                user.getHashPassword(),
-                user.isEnabled(),
-                true,
-                true,
-                !user.isBlock(),
-                getAuthorities(user.getRoles()));
+  private List<GrantedAuthority> getGrantedAuthorities(List<String> privileges) {
+    List<GrantedAuthority> authorities = new ArrayList<>();
+    for (String privilege : privileges) {
+      authorities.add(new SimpleGrantedAuthority(privilege));
     }
-
-    private Collection<? extends GrantedAuthority> getAuthorities(
-            List<String> roles) {
-
-        return getGrantedAuthorities(getPrivileges(roles));
-    }
-
-    private List<String> getPrivileges(List<String> roles) {
-        List<String> privileges = new ArrayList<>();
-        for (String role : roles) {
-            privileges.add(role);
-        }
-        return privileges;
-    }
-
-    private List<GrantedAuthority> getGrantedAuthorities(List<String> privileges) {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        for (String privilege : privileges) {
-            authorities.add(new SimpleGrantedAuthority(privilege));
-        }
-        return authorities;
-    }
+    return authorities;
+  }
 }

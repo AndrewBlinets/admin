@@ -13,10 +13,9 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class ProjectLanguageVersion extends BaseEntity implements Serializable {
 
-    private String title;
-    private String shortTitle;
-    private String content;
-    private String entrySpeech;
-    private String codeLanguage;
-
+  private String title;
+  private String shortTitle;
+  private String content;
+  private String entrySpeech;
+  private String codeLanguage;
 }

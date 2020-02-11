@@ -22,12 +22,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-  @Autowired
-  private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-  @Autowired
-  private UserDetailsService jwtUserDetailsService;
-  @Autowired
-  private JwtRequestFilter jwtRequestFilter;
+  @Autowired private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+  @Autowired private UserDetailsService jwtUserDetailsService;
+  @Autowired private JwtRequestFilter jwtRequestFilter;
 
   @Autowired
   public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -51,26 +48,35 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity httpSecurity) throws Exception {
     // We don't need CSRF for this example
-    httpSecurity.sessionManagement()
+    httpSecurity
+        .sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.NEVER)
-
         .and()
-        .csrf().disable()
-        .cors().and()
+        .csrf()
+        .disable()
+        .cors()
+        .and()
         .authorizeRequests()
-        .antMatchers("/authenticate").permitAll()
-        .antMatchers("/getInfo").permitAll()
-        .antMatchers("/department/**").hasAuthority("super-admin")
-        .antMatchers("/company/**").hasAuthority("super-admin")
-        .antMatchers("/news/**").hasAuthority("super-admin")
-//                .antMatchers("/department").hasRole("super-admin")
-//                .antMatchers("/hello").hasRole("superAdmin")
+        .antMatchers("/authenticate")
+        .permitAll()
+        .antMatchers("/getInfo")
+        .permitAll()
+        .antMatchers("/department/**")
+        .hasAuthority("super-admin")
+        .antMatchers("/company/**")
+        .hasAuthority("super-admin")
+        .antMatchers("/news/**")
+        .hasAuthority("super-admin")
+        //                .antMatchers("/department").hasRole("super-admin")
+        //                .antMatchers("/hello").hasRole("superAdmin")
         .and()
         // all other requests need to be authenticated
-//                        anyRequest().authenticated().and().
+        //                        anyRequest().authenticated().and().
         // make sure we use stateless session; session won't be used to
         // store user's state.
-        .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
+        .exceptionHandling()
+        .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+        .and()
         .sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     // Add a filter to validate the tokens with every request

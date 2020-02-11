@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/users")
 public class UserController extends BaseEntityAbstractController<User, UserRestTemplate>
-        implements BaseEntityController<User> {
+    implements BaseEntityController<User> {
 
-    protected UserController(UserRestTemplate userRestTemplate) {
-        super(userRestTemplate, "/users");
-    }
+  protected UserController(UserRestTemplate userRestTemplate) {
+    super(userRestTemplate, "/users");
+  }
 }

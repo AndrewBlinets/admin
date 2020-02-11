@@ -10,13 +10,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Company extends BaseEntity {
-    private String adress;
-    private String name;
-    private String shortName;
-    private String phoneFax;
-    private String email;
-    private String hotLine;
-    private String coordX;
-    private String coordY;
-    private String hotLinePhone;
+  private String adress;
+  private String name;
+  private String shortName;
+  private String phoneFax;
+  private String email;
+  private String hotLine;
+  private String coordX;
+  private String coordY;
+  private String hotLinePhone;
 }

@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 public class Project extends BaseEntity implements Serializable {
 
-    private List<ProjectLanguageVersion> languageVersions;
-    private FileManager mainImage;
-    private List<FileManager> images;
+  private List<ProjectLanguageVersion> languageVersions;
+  private FileManager mainImage;
+  private List<FileManager> images;
 }

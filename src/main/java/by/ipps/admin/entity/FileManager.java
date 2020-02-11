@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Setter
 public class FileManager extends BaseEntity implements Serializable {
 
-    private String fileName;
-    private String fileMine;
-    private String path;
+  private String fileName;
+  private String fileMine;
+  private String path;
 }

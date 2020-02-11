@@ -9,20 +9,20 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/company")
 public class CompanyConstructor {
 
-    private CompanyRestTemplate restTemplate;
+  private CompanyRestTemplate restTemplate;
 
-    public CompanyConstructor(CompanyRestTemplate companyService) {
-        this.restTemplate = companyService;
-    }
+  public CompanyConstructor(CompanyRestTemplate companyService) {
+    this.restTemplate = companyService;
+  }
 
-    @GetMapping
-    @ResponseBody
-    public ResponseEntity<Company> getInformationAboutCompany() {
-        return restTemplate.getActualInfo();
-    }
+  @GetMapping
+  @ResponseBody
+  public ResponseEntity<Company> getInformationAboutCompany() {
+    return restTemplate.getActualInfo();
+  }
 
-    @PostMapping
-    public ResponseEntity<Company> setInformationAboutCompany(@RequestBody Company company) {
-        return restTemplate.setActualInfo(company);
-    }
+  @PostMapping
+  public ResponseEntity<Company> setInformationAboutCompany(@RequestBody Company company) {
+    return restTemplate.setActualInfo(company);
+  }
 }

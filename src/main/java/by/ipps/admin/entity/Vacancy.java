@@ -11,9 +11,8 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Vacancy extends BaseEntity implements Serializable {
 
-    private String name;
-    private String content;
+  private String name;
+  private String content;
 }

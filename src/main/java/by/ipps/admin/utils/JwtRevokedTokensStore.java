@@ -11,36 +11,32 @@ import java.util.Set;
 @Component
 public class JwtRevokedTokensStore {
 
-    @Autowired
-    private JwtTokenUtil jwtTokenProvider;
+  @Autowired private JwtTokenUtil jwtTokenProvider;
 
-    private LinkedList<String> revokedTokensQueue = new LinkedList<>();
-    private Set<Integer> revokedTokens = new HashSet<>();
+  private LinkedList<String> revokedTokensQueue = new LinkedList<>();
+  private Set<Integer> revokedTokens = new HashSet<>();
 
-    void revokeToken(String token) throws InvalidJwtAuthenticationException {
-        if (!revokedTokens.contains(token.hashCode()))
-        {
-            revokedTokens.add(token.hashCode());
-            revokedTokensQueue.addLast(token);
-        }
-
-        boolean removeToken = true;
-
-        while (removeToken && revokedTokensQueue.size() > 0) {
-            String firstToken = revokedTokensQueue.getFirst();
-
-            if (firstToken != null && !jwtTokenProvider.validateToken(firstToken)) {
-                revokedTokens.remove(firstToken.hashCode());
-                revokedTokensQueue.removeFirst();
-            }
-            else {
-                removeToken = false;
-            }
-        }
+  void revokeToken(String token) throws InvalidJwtAuthenticationException {
+    if (!revokedTokens.contains(token.hashCode())) {
+      revokedTokens.add(token.hashCode());
+      revokedTokensQueue.addLast(token);
     }
 
-    boolean isTokenRevoked(String token)
-    {
-        return revokedTokens.contains(token.hashCode());
+    boolean removeToken = true;
+
+    while (removeToken && revokedTokensQueue.size() > 0) {
+      String firstToken = revokedTokensQueue.getFirst();
+
+      if (firstToken != null && !jwtTokenProvider.validateToken(firstToken)) {
+        revokedTokens.remove(firstToken.hashCode());
+        revokedTokensQueue.removeFirst();
+      } else {
+        removeToken = false;
+      }
     }
+  }
+
+  boolean isTokenRevoked(String token) {
+    return revokedTokens.contains(token.hashCode());
+  }
 }

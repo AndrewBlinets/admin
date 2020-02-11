@@ -12,7 +12,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DepartmentLeader extends BaseEntity implements Serializable {
-    private String name;
-    private String surName;
-    private String patronicName;
+  private String name;
+  private String surName;
+  private String patronicName;
 }

@@ -7,12 +7,11 @@ import by.ipps.admin.utils.resttemplate.NewsRestTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 @RequestMapping("/news")
 public class NewsController extends BaseEntityAbstractController<News, NewsRestTemplate>
-        implements BaseEntityController<News> {
-    public NewsController(NewsRestTemplate newsRestTemplate) {
-        super(newsRestTemplate, "news");
-    }
+    implements BaseEntityController<News> {
+  public NewsController(NewsRestTemplate newsRestTemplate) {
+    super(newsRestTemplate, "news");
+  }
 }

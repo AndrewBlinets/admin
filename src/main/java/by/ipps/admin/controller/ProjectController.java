@@ -7,14 +7,12 @@ import by.ipps.admin.utils.resttemplate.ProjectRestTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 @RequestMapping("/project")
 public class ProjectController extends BaseEntityAbstractController<Project, ProjectRestTemplate>
-        implements BaseEntityController<Project> {
+    implements BaseEntityController<Project> {
 
-    protected ProjectController(ProjectRestTemplate projectTemplate) {
-        super(projectTemplate, "/project");
-    }
-
+  protected ProjectController(ProjectRestTemplate projectTemplate) {
+    super(projectTemplate, "/project");
+  }
 }

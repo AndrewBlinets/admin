@@ -9,11 +9,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserTemplate extends AbstractBaseEntityRestTemplate<User> implements UserRestTemplate {
 
-
-    @Override
-    public User getUserByLogin(String login) {
-        ResponseEntity<User> response = restTemplate.postForEntity( URL_SERVER + "users/auth",
-                login, User.class);
-        return response.getBody();
-    }
+  @Override
+  public User getUserByLogin(String login) {
+    ResponseEntity<User> response =
+        restTemplate.postForEntity(URL_SERVER + "users/auth", login, User.class);
+    return response.getBody();
+  }
 }

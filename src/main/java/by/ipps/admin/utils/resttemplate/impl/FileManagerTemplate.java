@@ -16,56 +16,63 @@ import java.nio.file.Paths;
 import java.util.Objects;
 
 @Component
-public class FileManagerTemplate extends AbstractBaseEntityRestTemplate<FileManager> implements
-        FileManagerRestTemplate {
-    @Override
-    public ResponseEntity<HttpStatus> getById(long id, HttpServletResponse response) {
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_SERVER + "file/" + id);
-        try {
-            ResponseEntity<FileManager> result = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, null,
-                    FileManager.class);
-            response.setContentType(Objects.requireNonNull(result.getBody()).getFileMine());
-            response.setHeader("Content-Disposition", "attachment; filename=" + result.getBody().getFileName());
-            byte[] array = Files.readAllBytes(
-                    Paths.get(result.getBody().getPath() + File.separator + result.getBody().getFileName()));
-            response.getOutputStream().write(array);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (org.springframework.web.client.HttpClientErrorException exception) {
-//            log.info("getImageByID " + id);
-//            log.info(URL_SERVER);
-//            log.error(exception.getStatusCode() + " " + exception.getStatusText());
-            return new ResponseEntity<>(HttpStatus.valueOf(exception.getStatusCode().value()));
-        } catch (Exception e) {
-//            log.info("getImageByID");
-//            log.info(URL_SERVER);
-//            log.error(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+public class FileManagerTemplate extends AbstractBaseEntityRestTemplate<FileManager>
+    implements FileManagerRestTemplate {
+  @Override
+  public ResponseEntity<HttpStatus> getById(long id, HttpServletResponse response) {
+    UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_SERVER + "file/" + id);
+    try {
+      ResponseEntity<FileManager> result =
+          restTemplate.exchange(builder.toUriString(), HttpMethod.GET, null, FileManager.class);
+      response.setContentType(Objects.requireNonNull(result.getBody()).getFileMine());
+      response.setHeader(
+          "Content-Disposition", "attachment; filename=" + result.getBody().getFileName());
+      byte[] array =
+          Files.readAllBytes(
+              Paths.get(
+                  result.getBody().getPath() + File.separator + result.getBody().getFileName()));
+      response.getOutputStream().write(array);
+      return new ResponseEntity<>(HttpStatus.OK);
+    } catch (org.springframework.web.client.HttpClientErrorException exception) {
+      //            log.info("getImageByID " + id);
+      //            log.info(URL_SERVER);
+      //            log.error(exception.getStatusCode() + " " + exception.getStatusText());
+      return new ResponseEntity<>(HttpStatus.valueOf(exception.getStatusCode().value()));
+    } catch (Exception e) {
+      //            log.info("getImageByID");
+      //            log.info(URL_SERVER);
+      //            log.error(e.getMessage());
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+  }
 
-    @Override
-    public ResponseEntity<HttpStatus> getByIdRelize(long id, HttpServletResponse response) {
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_SERVER + "file/" + id);
-        try {
-            ResponseEntity<FileManager> result = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, null,
-                    FileManager.class);
-            response.setContentType(Objects.requireNonNull(result.getBody()).getFileMine());
-            response.setHeader("Content-Disposition", "attachment; filename=" + result.getBody().getFileName());
-            String nameFile = result.getBody().getFileName().split("\\.")[0] + "-resize." + result.getBody().getFileName().split("\\.")[1];
-            byte[] array = Files.readAllBytes(
-                    Paths.get(result.getBody().getPath() + File.separator + nameFile));
-            response.getOutputStream().write(array);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (org.springframework.web.client.HttpClientErrorException exception) {
-//            log.info("getImageByID " + id);
-//            log.info(URL_SERVER);
-//            log.error(exception.getStatusCode() + " " + exception.getStatusText());
-            return new ResponseEntity<>(HttpStatus.valueOf(exception.getStatusCode().value()));
-        } catch (Exception e) {
-//            log.info("getImageByID");
-//            log.info(URL_SERVER);
-//            log.error(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+  @Override
+  public ResponseEntity<HttpStatus> getByIdRelize(long id, HttpServletResponse response) {
+    UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_SERVER + "file/" + id);
+    try {
+      ResponseEntity<FileManager> result =
+          restTemplate.exchange(builder.toUriString(), HttpMethod.GET, null, FileManager.class);
+      response.setContentType(Objects.requireNonNull(result.getBody()).getFileMine());
+      response.setHeader(
+          "Content-Disposition", "attachment; filename=" + result.getBody().getFileName());
+      String nameFile =
+          result.getBody().getFileName().split("\\.")[0]
+              + "-resize."
+              + result.getBody().getFileName().split("\\.")[1];
+      byte[] array =
+          Files.readAllBytes(Paths.get(result.getBody().getPath() + File.separator + nameFile));
+      response.getOutputStream().write(array);
+      return new ResponseEntity<>(HttpStatus.OK);
+    } catch (org.springframework.web.client.HttpClientErrorException exception) {
+      //            log.info("getImageByID " + id);
+      //            log.info(URL_SERVER);
+      //            log.error(exception.getStatusCode() + " " + exception.getStatusText());
+      return new ResponseEntity<>(HttpStatus.valueOf(exception.getStatusCode().value()));
+    } catch (Exception e) {
+      //            log.info("getImageByID");
+      //            log.info(URL_SERVER);
+      //            log.error(e.getMessage());
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+  }
 }

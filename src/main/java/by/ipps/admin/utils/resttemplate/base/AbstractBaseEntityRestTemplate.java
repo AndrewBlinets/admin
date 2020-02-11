@@ -12,9 +12,9 @@ import java.util.Collections;
 
 public abstract class AbstractBaseEntityRestTemplate<E> implements BaseEntityRestTemplate<E> {
 
-  protected static final String URL_SERVER = "http://localhost:8082/dao/";
-//      protected static final String URL_SERVER = "http://192.168.1.125:8080/dao/";
-//      protected static final String URL_SERVER = "http://www.ipps.by:5454/dao/";
+//    protected static final String URL_SERVER = "http://localhost:8082/dao/";
+  protected static final String URL_SERVER = "http://192.168.1.125:8080/dao/";
+  //      protected static final String URL_SERVER = "http://www.ipps.by:5454/dao/";
 
   private Class<E> entityClass;
 
@@ -49,7 +49,9 @@ public abstract class AbstractBaseEntityRestTemplate<E> implements BaseEntityRes
 
   @Override
   public ResponseEntity<E> create(E entity, String url, long idUser) {
-    UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_SERVER + url + "?user=" + idUser);
+    UriComponentsBuilder builder =
+        UriComponentsBuilder.fromHttpUrl(URL_SERVER + url)
+                .queryParam("user", String.valueOf(idUser));
     HttpHeaders requestHeaders = new HttpHeaders();
     requestHeaders.setContentType(MediaType.APPLICATION_JSON);
     requestHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
@@ -60,7 +62,9 @@ public abstract class AbstractBaseEntityRestTemplate<E> implements BaseEntityRes
 
   @Override
   public ResponseEntity<E> update(E entity, String url, long idUser) {
-    UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_SERVER + url + "?user=" + idUser);
+    UriComponentsBuilder builder =
+        UriComponentsBuilder.fromHttpUrl(URL_SERVER + url)
+                .queryParam("user", String.valueOf(idUser));
     HttpHeaders requestHeaders = new HttpHeaders();
     requestHeaders.setContentType(MediaType.APPLICATION_JSON);
     requestHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
@@ -69,8 +73,10 @@ public abstract class AbstractBaseEntityRestTemplate<E> implements BaseEntityRes
   }
 
   @Override
-  public ResponseEntity<Boolean> delete(long byId, String url, long idUser) {
-    UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL_SERVER + url + "/" + byId + "?user=" + idUser);
+  public ResponseEntity<Boolean> delete(long id, String url, long idUser) {
+    UriComponentsBuilder builder =
+        UriComponentsBuilder.fromHttpUrl(URL_SERVER + url + "/" + id)
+                .queryParam("user", String.valueOf(idUser));
     return restTemplate.exchange(builder.toUriString(), HttpMethod.DELETE, null, Boolean.TYPE);
   }
 }

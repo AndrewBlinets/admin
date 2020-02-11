@@ -6,5 +6,5 @@ import org.springframework.stereotype.Component;
 
 @Component
 public interface UserRestTemplate extends BaseEntityRestTemplate<User> {
-    public User getUserByLogin(String login);
+  public User getUserByLogin(String login);
 }

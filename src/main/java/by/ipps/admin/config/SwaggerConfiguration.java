@@ -25,6 +25,7 @@ public class SwaggerConfiguration {
         .select()
         .apis(RequestHandlerSelectors.basePackage("by.ipps.admin.controller"))
         .paths(Predicates.not(PathSelectors.regex("/")))
-        .build().securitySchemes(Collections.singletonList(apiKey()));
+        .build()
+        .securitySchemes(Collections.singletonList(apiKey()));
   }
 }

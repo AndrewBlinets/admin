@@ -2,7 +2,6 @@ package by.ipps.admin.controller.base;
 
 import by.ipps.admin.custom.CustomPage;
 import by.ipps.admin.entity.BaseEntity;
-import by.ipps.admin.entity.User;
 import by.ipps.admin.entity.UserAuth;
 import by.ipps.admin.utils.RestRequestToDao;
 import by.ipps.admin.utils.resttemplate.base.BaseEntityRestTemplate;
@@ -12,14 +11,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-public abstract class BaseEntityAbstractController<T extends BaseEntity, S extends BaseEntityRestTemplate<T>>
+public abstract class BaseEntityAbstractController<
+        T extends BaseEntity, S extends BaseEntityRestTemplate<T>>
     implements BaseEntityController<T> {
 
   protected final S baseEntityTemplate;
   protected final String url;
 
-  @Autowired
-  private RestRequestToDao restRequestToDao;
+  @Autowired private RestRequestToDao restRequestToDao;
 
   protected BaseEntityAbstractController(S s, String url) {
     this.baseEntityTemplate = s;
@@ -43,12 +42,12 @@ public abstract class BaseEntityAbstractController<T extends BaseEntity, S exten
     Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     String username = "";
     if (principal instanceof UserDetails) {
-      username = ((UserDetails)principal).getUsername();
+      username = ((UserDetails) principal).getUsername();
     } else {
       username = principal.toString();
     }
-      UserAuth user = restRequestToDao.getUserByLogin(username);
-      return user.getId();
+    UserAuth user = restRequestToDao.getUserByLogin(username);
+    return user.getId();
   }
 
   @CrossOrigin
@@ -70,5 +69,4 @@ public abstract class BaseEntityAbstractController<T extends BaseEntity, S exten
   public ResponseEntity<CustomPage<T>> getAll(long page, int size, String sort, String language) {
     return baseEntityTemplate.findPagingRecords(page, size, sort, language, url);
   }
-
 }

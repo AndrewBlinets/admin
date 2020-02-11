@@ -15,9 +15,9 @@ import java.util.Date;
 @AllArgsConstructor
 public class NewsDto extends BaseEntity implements Serializable {
 
-    private Date datePublic;
-    private long mainImage;
-    private int countView;
-    private String shortTitle;
-    private String entrySpeech;
+  private Date datePublic;
+  private long mainImage;
+  private int countView;
+  private String shortTitle;
+  private String entrySpeech;
 }

@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/contact")
 public class ContactController extends BaseEntityAbstractController<Contact, ContactRestTemplate>
-        implements BaseEntityController<Contact> {
-    protected ContactController(ContactRestTemplate contactRestTemplate) {
-        super(contactRestTemplate, "/contact");
-    }
+    implements BaseEntityController<Contact> {
+  protected ContactController(ContactRestTemplate contactRestTemplate) {
+    super(contactRestTemplate, "/contact");
+  }
 }

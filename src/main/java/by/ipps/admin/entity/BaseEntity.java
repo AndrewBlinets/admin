@@ -13,5 +13,5 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class BaseEntity implements Serializable {
 
-    private long id;
+  private long id;
 }

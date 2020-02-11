@@ -15,10 +15,10 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CustomPage<T> {
 
-    List<T> content;
-    long totalElements;
-    private int number;
-    private int size;
-    private int totalPages;
-    private int numberOfElements;
+  List<T> content;
+  long totalElements;
+  private int number;
+  private int size;
+  private int totalPages;
+  private int numberOfElements;
 }
