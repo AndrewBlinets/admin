@@ -84,7 +84,7 @@ public abstract class AbstractBaseEntityRestTemplate<E> implements BaseEntityRes
   @Override
   public ResponseEntity<List<E>> findAllEntity(String language, String url) {
     UriComponentsBuilder builder =
-        UriComponentsBuilder.fromHttpUrl(URL_SERVER + url)
+        UriComponentsBuilder.fromHttpUrl(URL_SERVER + url + "/all")
             .queryParam("language", language);
     final ParameterizedTypeReference<List<E>> responseType =
         new ParameterizedTypeReference<List<E>>() {};
