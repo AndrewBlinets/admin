@@ -71,6 +71,7 @@ public abstract class BaseEntityAbstractController<
     return baseEntityTemplate.findPagingRecords(page, size, sort, language, url);
   }
 
+  @CrossOrigin
   @Override
   public ResponseEntity<List<T>> getAll(String language) {
     return baseEntityTemplate.findAllEntity(language, url);

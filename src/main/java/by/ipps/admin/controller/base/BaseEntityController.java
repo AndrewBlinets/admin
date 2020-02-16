@@ -37,7 +37,7 @@ public interface BaseEntityController<T extends BaseEntity> {
       @RequestParam(value = "language", required = false, defaultValue = "ru") String language);
 
   @CrossOrigin
-  @GetMapping
+  @GetMapping(value = "/all")
   ResponseEntity<List<T>> getAll(
       @RequestParam(value = "language", required = false, defaultValue = "ru") String language);
 }
