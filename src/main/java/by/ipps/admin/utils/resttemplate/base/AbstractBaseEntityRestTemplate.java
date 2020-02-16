@@ -1,6 +1,7 @@
 package by.ipps.admin.utils.resttemplate.base;
 
 import by.ipps.admin.custom.CustomPage;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
@@ -78,5 +79,15 @@ public abstract class AbstractBaseEntityRestTemplate<E> implements BaseEntityRes
         UriComponentsBuilder.fromHttpUrl(URL_SERVER + url + "/" + id)
                 .queryParam("user", String.valueOf(idUser));
     return restTemplate.exchange(builder.toUriString(), HttpMethod.DELETE, null, Boolean.TYPE);
+  }
+
+  @Override
+  public ResponseEntity<List<E>> findAllEntity(String language, String url) {
+    UriComponentsBuilder builder =
+        UriComponentsBuilder.fromHttpUrl(URL_SERVER + url)
+            .queryParam("language", language);
+    final ParameterizedTypeReference<List<E>> responseType =
+        new ParameterizedTypeReference<List<E>>() {};
+    return restTemplate.exchange(builder.toUriString(), HttpMethod.GET, null, responseType);
   }
 }

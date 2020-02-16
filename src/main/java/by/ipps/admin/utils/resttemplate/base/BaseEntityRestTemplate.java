@@ -1,6 +1,7 @@
 package by.ipps.admin.utils.resttemplate.base;
 
 import by.ipps.admin.custom.CustomPage;
+import java.util.List;
 import org.springframework.http.ResponseEntity;
 
 public interface BaseEntityRestTemplate<T> {
@@ -15,4 +16,6 @@ public interface BaseEntityRestTemplate<T> {
   ResponseEntity<T> update(T entity, String url, long idUser);
 
   ResponseEntity<Boolean> delete(long byId, String url, long idUser);
+
+  ResponseEntity<List<T>> findAllEntity(String language, String url);
 }

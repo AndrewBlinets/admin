@@ -5,6 +5,7 @@ import by.ipps.admin.entity.BaseEntity;
 import by.ipps.admin.entity.UserAuth;
 import by.ipps.admin.utils.RestRequestToDao;
 import by.ipps.admin.utils.resttemplate.base.BaseEntityRestTemplate;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -68,5 +69,10 @@ public abstract class BaseEntityAbstractController<
   @Override
   public ResponseEntity<CustomPage<T>> getAll(long page, int size, String sort, String language) {
     return baseEntityTemplate.findPagingRecords(page, size, sort, language, url);
+  }
+
+  @Override
+  public ResponseEntity<List<T>> getAll(String language) {
+    return baseEntityTemplate.findAllEntity(language, url);
   }
 }
