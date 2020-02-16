@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/company")
+@CrossOrigin
 public class CompanyConstructor {
 
   private CompanyRestTemplate restTemplate;

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
+@CrossOrigin
 public class TestController {
 
   private final UserRestTemplate rest;
@@ -23,7 +24,6 @@ public class TestController {
     this.jwtTokenUtil = jwtTokenUtil;
   }
 
-  @CrossOrigin
   @GetMapping(value = "/getInfo")
   @ResponseBody
   public User getBaseInfo() {
