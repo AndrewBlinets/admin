@@ -2,11 +2,11 @@ package by.ipps.admin.controller.base;
 
 import by.ipps.admin.custom.CustomPage;
 import by.ipps.admin.entity.BaseEntity;
-import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 public interface BaseEntityController<T extends BaseEntity> {
 

@@ -1,8 +1,9 @@
 package by.ipps.admin.utils.resttemplate.base;
 
 import by.ipps.admin.custom.CustomPage;
-import java.util.List;
 import org.springframework.http.ResponseEntity;
+
+import java.util.List;
 
 public interface BaseEntityRestTemplate<T> {
 

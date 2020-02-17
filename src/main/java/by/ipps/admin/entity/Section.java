@@ -17,5 +17,4 @@ public class Section extends BaseEntity implements Serializable {
   private String name;
   private int code;
   private List<Department> departments;
-
 }

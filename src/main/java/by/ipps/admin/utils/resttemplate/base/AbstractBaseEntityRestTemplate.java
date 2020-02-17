@@ -1,7 +1,6 @@
 package by.ipps.admin.utils.resttemplate.base;
 
 import by.ipps.admin.custom.CustomPage;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
@@ -10,12 +9,14 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.Collections;
+import java.util.List;
 
 public abstract class AbstractBaseEntityRestTemplate<E> implements BaseEntityRestTemplate<E> {
 
-//    protected static final String URL_SERVER = "http://localhost:8082/dao/";
-//  protected static final String URL_SERVER = "http://192.168.1.125:8080/dao/";
-        protected static final String URL_SERVER = "http://www.ipps.by:5454/dao/";
+  //    protected static final String URL_SERVER = "http://localhost:8082/dao/";
+  //  protected static final String URL_SERVER = "http://192.168.1.125:8080/dao/";
+  protected static final String URL_SERVER = "http://localhost:8080/dao/";
+  //      protected static final String URL_SERVER = "http://www.ipps.by:5454/dao/";
 
   private Class<E> entityClass;
 
@@ -52,7 +53,7 @@ public abstract class AbstractBaseEntityRestTemplate<E> implements BaseEntityRes
   public ResponseEntity<E> create(E entity, String url, long idUser) {
     UriComponentsBuilder builder =
         UriComponentsBuilder.fromHttpUrl(URL_SERVER + url)
-                .queryParam("user", String.valueOf(idUser));
+            .queryParam("user", String.valueOf(idUser));
     HttpHeaders requestHeaders = new HttpHeaders();
     requestHeaders.setContentType(MediaType.APPLICATION_JSON);
     requestHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
@@ -65,7 +66,7 @@ public abstract class AbstractBaseEntityRestTemplate<E> implements BaseEntityRes
   public ResponseEntity<E> update(E entity, String url, long idUser) {
     UriComponentsBuilder builder =
         UriComponentsBuilder.fromHttpUrl(URL_SERVER + url)
-                .queryParam("user", String.valueOf(idUser));
+            .queryParam("user", String.valueOf(idUser));
     HttpHeaders requestHeaders = new HttpHeaders();
     requestHeaders.setContentType(MediaType.APPLICATION_JSON);
     requestHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
@@ -77,7 +78,7 @@ public abstract class AbstractBaseEntityRestTemplate<E> implements BaseEntityRes
   public ResponseEntity<Boolean> delete(long id, String url, long idUser) {
     UriComponentsBuilder builder =
         UriComponentsBuilder.fromHttpUrl(URL_SERVER + url + "/" + id)
-                .queryParam("user", String.valueOf(idUser));
+            .queryParam("user", String.valueOf(idUser));
     return restTemplate.exchange(builder.toUriString(), HttpMethod.DELETE, null, Boolean.TYPE);
   }
 
