@@ -18,7 +18,7 @@ public abstract class BaseEntityAbstractController<
     implements BaseEntityController<T> {
 
   protected final S baseEntityTemplate;
-  protected final String url;
+  protected String url;
 
   @Autowired private RestRequestToDao restRequestToDao;
 

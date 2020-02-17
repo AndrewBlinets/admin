@@ -1,11 +1,12 @@
 package by.ipps.admin.utils.resttemplate.base;
 
 import by.ipps.admin.custom.CustomPage;
+import by.ipps.admin.entity.BaseEntity;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-public interface BaseEntityRestTemplate<T> {
+public interface BaseEntityRestTemplate<T extends BaseEntity> {
 
   ResponseEntity<T> findById(Long id, String url);
 

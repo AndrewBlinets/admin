@@ -15,12 +15,12 @@ import java.util.List;
 @Setter
 public class News extends BaseEntity implements Serializable {
 
-  private Date dti;
-  private Date datePublic;
+  protected Date dti;
+  protected Date datePublic;
   private List<NewsLanguageVersion> languageVersions;
   private FileManager mainImage;
   private int countView;
-  private int status;
+  protected int status;
   private Department department;
   private Section section;
 }
