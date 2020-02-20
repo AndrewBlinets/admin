@@ -13,21 +13,20 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class News extends BaseEntity implements Serializable {
+public class NewsToBD extends BaseEntity implements Serializable {
 
   protected Date dti;
   protected Date datePublic;
   private List<NewsLanguageVersion> languageVersions;
-  private long mainImage;
+  private FileManager mainImage;
   private int countView;
   protected int status;
   private Department department;
   private Section section;
-  private String shortTitle;
 
-  public void setMainImage(BaseEntity mainImage) {
+  public void setMainImage(long mainImage) {
     try{
-      this.mainImage = mainImage.getId();
+      this.mainImage = new FileManager(mainImage);
     } catch (NullPointerException e){
     }
   }

@@ -2,6 +2,7 @@ package by.ipps.admin.controller;
 
 import by.ipps.admin.entity.FileManager;
 import by.ipps.admin.entity.UserAuth;
+import by.ipps.admin.exception.SaveFileException;
 import by.ipps.admin.utils.RestRequestToDao;
 import by.ipps.admin.utils.resttemplate.FileManagerRestTemplate;
 import org.springframework.http.HttpStatus;
@@ -35,15 +36,33 @@ public class FileManagerController {
     this.restRequestToDao = restRequestToDao;
   }
 
-  @PostMapping(value = "/{type}")
+  @PostMapping("/file")
+  public ResponseEntity<Long> saveFile(
+          @RequestBody MultipartFile file) throws SaveFileException {
+    return new ResponseEntity<>(getStringResponseEntity(file), HttpStatus.OK);
+  }
+
+  @PostMapping
   public ResponseEntity<String> saveImage(
-      @RequestBody MultipartFile file, @PathVariable("type") String type) {
+      @RequestBody MultipartFile upload) throws SaveFileException {
+    return ResponseEntity.ok(
+            "{"
+                    + "    \"urls\": {"
+                    + "        \"default\": \"http://www.ipps.by:5454/client-api/image/"
+                    + getStringResponseEntity(upload)
+                    + "\""
+                    + "    }"
+                    + "}");
+  }
+
+  private Long getStringResponseEntity(@RequestBody MultipartFile upload) throws SaveFileException {
     String name = null;
-    if (!file.isEmpty()) {
+    if (!upload.isEmpty()) {
       try {
-        byte[] bytes = file.getBytes();
-        name = file.getOriginalFilename();
-        String contentType = file.getContentType().split("/")[1];
+        String type = upload.getContentType().split("/")[1];
+        byte[] bytes = upload.getBytes();
+        name = upload.getOriginalFilename();
+        String contentType = upload.getContentType().split("/")[1];
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         String path =
@@ -61,7 +80,7 @@ public class FileManagerController {
         }
         FileManager fileManager =
             new FileManager(
-                name, file.getContentType(), dir.getAbsolutePath() + File.separator + name);
+                name, upload.getContentType(), dir.getAbsolutePath() + File.separator + name);
         File uploadedFile = new File(dir.getAbsolutePath() + File.separator + name);
         try (BufferedOutputStream stream =
             new BufferedOutputStream(new FileOutputStream(uploadedFile))) {
@@ -99,21 +118,13 @@ public class FileManagerController {
                 new File(path + File.separator + nameSprit[0] + "-resize." + nameSprit[1]));
           }
         }
-        return ResponseEntity.ok(
-            "{"
-                + "    \"urls\": {"
-                + "        \"default\": \"http://www.ipps.by:5454/admin-api/image/"
-                + fileManager.getId()
-                + "\""
-                + "    }"
-                + "}");
+        return fileManager.getId();
       } catch (Exception e) {
-        return new ResponseEntity<>(
-            "You failed to upload " + name + " => " + e.getMessage(), HttpStatus.BAD_REQUEST);
+        e.printStackTrace();
+        throw new SaveFileException("Error save");
       }
     } else {
-      return new ResponseEntity<>(
-          "You failed to upload " + name + " because the file was empty.", HttpStatus.BAD_REQUEST);
+      throw new SaveFileException("Error save");
     }
   }
 

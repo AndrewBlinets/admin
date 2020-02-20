@@ -12,6 +12,5 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BaseEntity implements Serializable {
-
-  private long id;
+  protected long id;
 }

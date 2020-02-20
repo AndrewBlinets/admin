@@ -9,9 +9,9 @@ import org.springframework.web.client.RestTemplate;
 public class RestRequestToDao {
 
   protected static final String URL_SERVER = "http://192.168.1.125:8080/dao/users/auth"; // server
-  //    protected static final String URL_SERVER = "http://192.168.1.89:8082/dao/users/auth";//
+//      protected static final String URL_SERVER = "http://192.168.1.89:8082/dao/users/auth";//
   // local work
-  //  protected static final String URL_SERVER = "http://localhost:8082/dao/users/auth";// local
+//    protected static final String URL_SERVER = "http://localhost:8082/dao/users/auth";// local
   // home
 
   public UserAuth getUserByLogin(String login) {

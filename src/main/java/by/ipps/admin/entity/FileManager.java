@@ -16,4 +16,8 @@ public class FileManager extends BaseEntity implements Serializable {
   private String fileName;
   private String fileMine;
   private String path;
+
+  public FileManager(long mainImage) {
+    this.id = mainImage;
+  }
 }

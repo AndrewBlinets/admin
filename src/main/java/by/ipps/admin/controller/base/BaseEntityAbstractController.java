@@ -5,6 +5,7 @@ import by.ipps.admin.entity.BaseEntity;
 import by.ipps.admin.entity.UserAuth;
 import by.ipps.admin.utils.RestRequestToDao;
 import by.ipps.admin.utils.resttemplate.base.BaseEntityRestTemplate;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,18 +14,21 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 
+@Slf4j
 public abstract class BaseEntityAbstractController<
         T extends BaseEntity, S extends BaseEntityRestTemplate<T>>
     implements BaseEntityController<T> {
 
   protected final S baseEntityTemplate;
   protected final String url;
+  protected String sortDefault;
 
   @Autowired private RestRequestToDao restRequestToDao;
 
-  protected BaseEntityAbstractController(S s, String url) {
+  protected BaseEntityAbstractController(S s, String url, String sortDefault) {
     this.baseEntityTemplate = s;
     this.url = url;
+    this.sortDefault = sortDefault;
   }
 
   @CrossOrigin
@@ -69,7 +73,7 @@ public abstract class BaseEntityAbstractController<
   @CrossOrigin
   @Override
   public ResponseEntity<CustomPage<T>> getAll(long page, int size, String sort, String language) {
-    return baseEntityTemplate.findPagingRecords(page, size, sort, language, url);
+    return baseEntityTemplate.findPagingRecords(page, size, sort == null ? this.sortDefault : sort, language, url);
   }
 
   @CrossOrigin

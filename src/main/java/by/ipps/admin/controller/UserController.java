@@ -13,6 +13,6 @@ public class UserController extends BaseEntityAbstractController<User, UserRestT
     implements BaseEntityController<User> {
 
   protected UserController(UserRestTemplate userRestTemplate) {
-    super(userRestTemplate, "/users");
+    super(userRestTemplate, "/users", "id");
   }
 }

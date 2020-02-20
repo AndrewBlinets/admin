@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 public class NewsController extends BaseEntityAbstractController<News, NewsRestTemplate>
     implements BaseEntityController<News> {
+
   public NewsController(NewsRestTemplate newsRestTemplate) {
-    super(newsRestTemplate, "news");
+    super(newsRestTemplate, "news", "dti,DESC");
   }
+
 }

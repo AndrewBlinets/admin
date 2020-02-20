@@ -30,7 +30,7 @@ public class FileManagerTemplate extends AbstractBaseEntityRestTemplate<FileMana
       byte[] array =
           Files.readAllBytes(
               Paths.get(
-                  result.getBody().getPath() + File.separator + result.getBody().getFileName()));
+                  result.getBody().getPath()));
       response.getOutputStream().write(array);
       return new ResponseEntity<>(HttpStatus.OK);
     } catch (org.springframework.web.client.HttpClientErrorException exception) {
@@ -60,7 +60,7 @@ public class FileManagerTemplate extends AbstractBaseEntityRestTemplate<FileMana
               + "-resize."
               + result.getBody().getFileName().split("\\.")[1];
       byte[] array =
-          Files.readAllBytes(Paths.get(result.getBody().getPath() + File.separator + nameFile));
+          Files.readAllBytes(Paths.get(result.getBody().getPath()));
       response.getOutputStream().write(array);
       return new ResponseEntity<>(HttpStatus.OK);
     } catch (org.springframework.web.client.HttpClientErrorException exception) {

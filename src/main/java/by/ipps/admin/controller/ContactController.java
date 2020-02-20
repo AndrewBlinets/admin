@@ -14,6 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class ContactController extends BaseEntityAbstractController<Contact, ContactRestTemplate>
     implements BaseEntityController<Contact> {
   protected ContactController(ContactRestTemplate contactRestTemplate) {
-    super(contactRestTemplate, "/contact");
+    super(contactRestTemplate, "/contact", "id,ASC");
   }
 }
