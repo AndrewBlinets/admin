@@ -7,6 +7,7 @@ import by.ipps.admin.utils.RestRequestToDao;
 import by.ipps.admin.utils.resttemplate.base.BaseEntityRestTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -44,7 +45,7 @@ public abstract class BaseEntityAbstractController<
     return baseEntityTemplate.create(entity, url, idUser);
   }
 
-  private Long getUserID() {
+  protected Long getUserID() {
     Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     String username = "";
     if (principal instanceof UserDetails) {
@@ -67,13 +68,15 @@ public abstract class BaseEntityAbstractController<
   @Override
   public ResponseEntity<Boolean> remove(Long id) {
     long idUser = getUserID();
-    return baseEntityTemplate.delete(id, url, idUser);
+    baseEntityTemplate.delete(id, url, idUser);
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 
   @CrossOrigin
   @Override
   public ResponseEntity<CustomPage<T>> getAll(long page, int size, String sort, String language) {
-    return baseEntityTemplate.findPagingRecords(page, size, sort == null ? this.sortDefault : sort, language, url);
+    return baseEntityTemplate.findPagingRecords(
+        page, size, (sort == null || sort.equals("")) ? this.sortDefault : sort, language, url);
   }
 
   @CrossOrigin

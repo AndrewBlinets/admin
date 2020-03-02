@@ -22,12 +22,12 @@ public class NewsToBD extends BaseEntity implements Serializable {
   private int countView;
   protected int status;
   private Department department;
-  private Section section;
+  private Page page;
 
   public void setMainImage(long mainImage) {
-    try{
+    try {
       this.mainImage = new FileManager(mainImage);
-    } catch (NullPointerException e){
+    } catch (NullPointerException e) {
     }
   }
 }

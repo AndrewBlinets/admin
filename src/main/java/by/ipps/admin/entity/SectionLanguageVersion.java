@@ -5,16 +5,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.Serializable;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProjectLanguageVersion extends BaseEntity implements Serializable {
-
-  private String title;
-  private String shortTitle;
-  private String content;
+public class SectionLanguageVersion extends BaseEntity {
+  private String name;
+  private List<BlockForFront> blocks;
   private String codeLanguage;
 }

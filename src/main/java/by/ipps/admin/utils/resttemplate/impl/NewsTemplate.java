@@ -17,8 +17,7 @@ import java.util.Collections;
 @Component
 public class NewsTemplate extends AbstractBaseEntityRestTemplate<News> implements NewsRestTemplate {
 
-  @Autowired
-  private ModelMapper modelMapper;
+  @Autowired private ModelMapper modelMapper;
 
   @Override
   public ResponseEntity<CustomPage<News>> findPagingRecords(
@@ -31,31 +30,41 @@ public class NewsTemplate extends AbstractBaseEntityRestTemplate<News> implement
             .queryParam("language", language);
     final ParameterizedTypeReference<CustomPage<News>> responseType =
         new ParameterizedTypeReference<CustomPage<News>>() {};
-    return restTemplate.exchange(builder.toUriString(), HttpMethod.GET, null, responseType);
+    ResponseEntity<CustomPage<News>> a =
+        restTemplate.exchange(builder.toUriString(), HttpMethod.GET, null, responseType);
+    return a;
   }
 
   @Override
   public ResponseEntity<News> create(News entity, String url, long idUser) {
-    UriComponentsBuilder builder =
-            UriComponentsBuilder.fromHttpUrl(URL_SERVER + url)
-                    .queryParam("user", String.valueOf(idUser));
-    HttpHeaders requestHeaders = new HttpHeaders();
-    requestHeaders.setContentType(MediaType.APPLICATION_JSON);
-    requestHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-    HttpEntity<NewsToBD> requestEntity = new HttpEntity<>(modelMapper.map(entity, NewsToBD.class), requestHeaders);
-    return restTemplate.exchange(
-            builder.toUriString(), HttpMethod.POST, requestEntity, News.class);
+    try {
+      UriComponentsBuilder builder =
+          UriComponentsBuilder.fromHttpUrl(URL_SERVER + url)
+              .queryParam("user", String.valueOf(idUser));
+      HttpHeaders requestHeaders = new HttpHeaders();
+      requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+      requestHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+      HttpEntity<NewsToBD> requestEntity =
+          new HttpEntity<>(modelMapper.map(entity, NewsToBD.class), requestHeaders);
+      return restTemplate.exchange(
+          builder.toUriString(), HttpMethod.POST, requestEntity, News.class);
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.out.println(e.getMessage());
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @Override
   public ResponseEntity<News> update(News entity, String url, long idUser) {
     UriComponentsBuilder builder =
-            UriComponentsBuilder.fromHttpUrl(URL_SERVER + url)
-                    .queryParam("user", String.valueOf(idUser));
+        UriComponentsBuilder.fromHttpUrl(URL_SERVER + url)
+            .queryParam("user", String.valueOf(idUser));
     HttpHeaders requestHeaders = new HttpHeaders();
     requestHeaders.setContentType(MediaType.APPLICATION_JSON);
     requestHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-    HttpEntity<NewsToBD> requestEntity = new HttpEntity<>(modelMapper.map(entity, NewsToBD.class), requestHeaders);
+    HttpEntity<NewsToBD> requestEntity =
+        new HttpEntity<>(modelMapper.map(entity, NewsToBD.class), requestHeaders);
     return restTemplate.exchange(builder.toUriString(), HttpMethod.PUT, requestEntity, News.class);
   }
 }

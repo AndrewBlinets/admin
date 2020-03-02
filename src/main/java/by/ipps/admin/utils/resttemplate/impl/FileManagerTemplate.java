@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Objects;
@@ -27,10 +26,7 @@ public class FileManagerTemplate extends AbstractBaseEntityRestTemplate<FileMana
       response.setContentType(Objects.requireNonNull(result.getBody()).getFileMine());
       response.setHeader(
           "Content-Disposition", "attachment; filename=" + result.getBody().getFileName());
-      byte[] array =
-          Files.readAllBytes(
-              Paths.get(
-                  result.getBody().getPath()));
+      byte[] array = Files.readAllBytes(Paths.get(result.getBody().getPath()));
       response.getOutputStream().write(array);
       return new ResponseEntity<>(HttpStatus.OK);
     } catch (org.springframework.web.client.HttpClientErrorException exception) {
@@ -59,8 +55,7 @@ public class FileManagerTemplate extends AbstractBaseEntityRestTemplate<FileMana
           result.getBody().getFileName().split("\\.")[0]
               + "-resize."
               + result.getBody().getFileName().split("\\.")[1];
-      byte[] array =
-          Files.readAllBytes(Paths.get(result.getBody().getPath()));
+      byte[] array = Files.readAllBytes(Paths.get(result.getBody().getPath()));
       response.getOutputStream().write(array);
       return new ResponseEntity<>(HttpStatus.OK);
     } catch (org.springframework.web.client.HttpClientErrorException exception) {

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 @NoArgsConstructor
@@ -14,7 +15,19 @@ import java.util.List;
 @Setter
 public class Project extends BaseEntity implements Serializable {
 
+  protected Date dti;
+  protected Date datePublic;
   private List<ProjectLanguageVersion> languageVersions;
-  private FileManager mainImage;
-  private List<FileManager> images;
+  private long mainImage;
+  private int status;
+  private Department department;
+  private Page page;
+  private String shortTitle;
+
+  public void setMainImage(BaseEntity mainImage) {
+    try {
+      this.mainImage = mainImage.getId();
+    } catch (NullPointerException e) {
+    }
+  }
 }

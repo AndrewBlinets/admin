@@ -5,16 +5,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.Serializable;
-
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProjectLanguageVersion extends BaseEntity implements Serializable {
+@Getter
+@Setter
+public class BlockLanguageVersion extends BaseEntity {
 
-  private String title;
-  private String shortTitle;
   private String content;
   private String codeLanguage;
+
+  public BlockLanguageVersion(long id, String content, String codeLanguage) {
+    super(id);
+    this.content = content;
+    this.codeLanguage = codeLanguage;
+  }
 }

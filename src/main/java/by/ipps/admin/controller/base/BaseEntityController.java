@@ -26,11 +26,12 @@ public interface BaseEntityController<T extends BaseEntity> {
 
   @CrossOrigin
   @DeleteMapping(value = "/{id}")
-  ResponseEntity<Boolean> remove(@PathVariable Long id);
+  ResponseEntity<Boolean> remove(@PathVariable Long id) throws Exception;
 
   @CrossOrigin
   @GetMapping
   ResponseEntity<CustomPage<T>> getAll(
+      //          @AuthenticationPrincipal User user,
       @RequestParam(value = "page", required = false, defaultValue = "0") long page,
       @RequestParam(value = "size", required = false, defaultValue = "10") int size,
       @RequestParam(value = "sort", required = false, defaultValue = "") String sort,

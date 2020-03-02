@@ -1,6 +1,5 @@
-package by.ipps.admin.dto;
+package by.ipps.admin.entity;
 
-import by.ipps.admin.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

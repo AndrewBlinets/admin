@@ -16,6 +16,6 @@ public class DepartmentController
     implements BaseEntityController<Department> {
 
   public DepartmentController(DepartmentRestTemplate departmentTemplate) {
-    super(departmentTemplate, "department", "id");
+    super(departmentTemplate, "department", "code,ASC");
   }
 }
