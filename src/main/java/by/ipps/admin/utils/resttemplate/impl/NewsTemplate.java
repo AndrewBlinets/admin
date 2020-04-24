@@ -30,9 +30,7 @@ public class NewsTemplate extends AbstractBaseEntityRestTemplate<News> implement
             .queryParam("language", language);
     final ParameterizedTypeReference<CustomPage<News>> responseType =
         new ParameterizedTypeReference<CustomPage<News>>() {};
-    ResponseEntity<CustomPage<News>> a =
-        restTemplate.exchange(builder.toUriString(), HttpMethod.GET, null, responseType);
-    return a;
+    return restTemplate.exchange(builder.toUriString(), HttpMethod.GET, null, responseType);
   }
 
   @Override

@@ -23,6 +23,7 @@ public class Project extends BaseEntity implements Serializable {
   private Department department;
   private Page page;
   private String shortTitle;
+  private boolean publicForCustomer;
 
   public void setMainImage(BaseEntity mainImage) {
     try {
