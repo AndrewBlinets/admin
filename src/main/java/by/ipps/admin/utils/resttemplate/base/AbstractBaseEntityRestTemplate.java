@@ -94,6 +94,7 @@ public abstract class AbstractBaseEntityRestTemplate<E> implements BaseEntityRes
             .queryParam("language", language);
     final ParameterizedTypeReference<List<E>> responseType =
         new ParameterizedTypeReference<List<E>>() {};
-    return restTemplate.exchange(builder.toUriString(), HttpMethod.GET, null, responseType);
+    ResponseEntity<List<E>> a = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, null, responseType);
+    return a;
   }
 }
